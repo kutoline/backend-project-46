@@ -8,6 +8,7 @@ program
     .version('1.0.0')
 
 program
-    .helpOption('-h --help', 'output usage information');
+    .arguments('<filepath1> <filepath2>')
+    .option('-f, --file <type>', 'output format');
 
 program.parse(process.argv);

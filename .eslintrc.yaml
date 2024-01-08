@@ -1,0 +1,6 @@
+plugins:
+  - eslint-plugin-import
+extends: eslint-config-airbnb-base
+rules:
+  no-console: off
+  import/extensions: off

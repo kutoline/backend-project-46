@@ -1,12 +1,8 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
-import fs from 'fs';
+import { getDataFromFile } from '../gendiff.js';
 
 const program = new Command();
-
-const gendiff = (file1, file2) => {
-  console.log(file1, file2);
-};
 
 program
   .name('gendiff')
@@ -15,12 +11,10 @@ program
 
 program
   .arguments('<filepath1> <filepath2>')
-  .option('-f, --file <type>', 'output format')
+  .option('-f, --format <type>', 'output format', 'json')
   .action((path1, path2) => {
-    const fileData = JSON.parse(fs.readFileSync(path1, 'utf-8'));
-    const fileData2 = JSON.parse(fs.readFileSync(path2, 'utf-8'));
-    const fileDataKeys = Object.keys(fileData);
-    const fileDataValues = Object.values(fileData);
+    const file1 = getDataFromFile(path1);
+    const file2 = getDataFromFile(path2);
   });
 
 program.parse(process.argv);

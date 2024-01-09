@@ -10,6 +10,9 @@
   },
   "author": "Evgeniy Kutolin",
   "license": "ISC",
+  "bin": {
+    "gendiff": "./bin/gendiff.js"
+  },
   "bugs": {
     "url": "https://github.com/kutoline/backend-project-46"
   },

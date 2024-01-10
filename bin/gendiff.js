@@ -12,9 +12,9 @@ program
 program
   .arguments('<filepath1> <filepath2>')
   .option('-f, --format <type>', 'output format', 'json')
-  .action((path1, path2) => {
-    const file1 = getDataFromFile(path1);
-    const file2 = getDataFromFile(path2);
+  .action((path1, path2, { format }) => {
+    const file1 = getDataFromFile(path1, format);
+    const file2 = getDataFromFile(path2, format);
   });
 
 program.parse(process.argv);

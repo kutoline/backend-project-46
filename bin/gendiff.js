@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
-import { getDataFromFile } from '../gendiff.js';
+import {gendiff, getDataFromFile} from '../gendiff.js';
 
 const program = new Command();
 
@@ -15,6 +15,8 @@ program
   .action((path1, path2, { format }) => {
     const file1 = getDataFromFile(path1, format);
     const file2 = getDataFromFile(path2, format);
+
+    gendiff(file1, file2);
   });
 
 program.parse(process.argv);

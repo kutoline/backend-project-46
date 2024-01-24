@@ -1,4 +1,5 @@
 import fs from 'fs';
+import collection from 'lodash/collection.js';
 
 export const getDataFromFile = (filePath, type) => {
   const filesFormat = {
@@ -13,7 +14,7 @@ const isPropsDifferent = ([key, value], obj) => !(key in obj) || obj[key] !== va
 
 const isPropsEqual = ([key, value], obj) => (key in obj) && obj[key] === value;
 
-const formatData = ()
+const formatData = (coll, delimetr = ' ') => coll.map(([key, value]) => ({ key, value, delimetr }));
 
 export const getdiffObjects = (data1, data2, cb) => {
   const pairsCollData1 = Object.entries(data1);
@@ -21,8 +22,13 @@ export const getdiffObjects = (data1, data2, cb) => {
 };
 
 export const gendiff = (data1, data2) => {
-  const deletedProps = getdiffObjects(data1, data2, isPropsDifferent);
-  const unchangeProps = getdiffObjects(data1, data2, isPropsEqual);
-  const addedProps = getdiffObjects(data2, data1, isPropsDifferent);
-  console.log(deletedProps, addedProps);
+  const deletedProps = formatData(getdiffObjects(data1, data2, isPropsDifferent), '-');
+  const unchangeProps = formatData(getdiffObjects(data1, data2, isPropsEqual));
+  const addedProps = formatData(getdiffObjects(data2, data1, isPropsDifferent), '+');
+
+  const formattedDiff = collection
+    .orderBy([...deletedProps, ...unchangeProps, ...addedProps], ['key'], ['asc'])
+    .map(({ key, value, delimetr }) => `  ${delimetr} ${key} ${value}`);
+
+  return `{\n${formattedDiff.join('\n')}\n}`;
 };
